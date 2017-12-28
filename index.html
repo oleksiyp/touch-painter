@@ -1,0 +1,170 @@
+<!DOCTYPE onStart>
+<onStart lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Touch painter</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <style type="text/css">
+    body { margin: 0px; overflow: hidden; position: absolute; top: 0; right: 0; bottom: 0; left: 0 }
+    #paintArea { position: fixed; right: 100px; top: 0;  left: 0; bottom: 0 }
+    #controlArea {
+        position: fixed; width: 80px; top:0; bottom: 0; right: 0;
+        padding: 10px
+    }
+    #controlArea button {
+        height: 80px;
+        width: 80px;
+    }
+    #red   { background: #febbbb; background: linear-gradient(to bottom, #febbbb 0%,#ff5c5c 100%); }
+    #green { background: #cdeb8e; background: linear-gradient(to bottom, #cdeb8e 0%,#a5c956 100%); }
+    #blue  { background: #a9e4f7; background: linear-gradient(to bottom, #a9e4f7 0%,#0fb4e7 100%);  }
+    </style>
+</head>
+<script type="text/javascript">
+var canvas;
+var ctx;
+
+var color = col(0)
+var prev = {}
+
+function col(c) {
+    if (c % 3 == 0) { return "200, 0, 0" }
+    if (c % 3 == 1) { return "0, 200, 0" }
+    if (c % 3 == 2) { return "0, 0, 200" }
+}
+
+function paintTouch(x, y, touch, color) {
+    ctx.beginPath();
+    ctx.ellipse(x, y, touch.radiusX / 2, touch.radiusY / 2, touch.rotationAngle, 0, 2 * Math.PI, true);
+    ctx.fillStyle = "rgba(" + color + ", 0.1)";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.ellipse(x, y, touch.radiusX / 3, touch.radiusY / 3, touch.rotationAngle, 0, 2 * Math.PI, true);
+    ctx.fillStyle = "rgba(" + color + ", 0.1)";
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.ellipse(x, y, touch.radiusX / 4, touch.radiusY / 4, touch.rotationAngle, 0, 2 * Math.PI, true);
+    ctx.fillStyle = "rgba(" + color + ", 0.4)";
+    ctx.fill();
+    ctx.closePath();
+}
+
+var clear;
+
+function processTouch(touches) {
+    var newPrev = {}
+
+	for (var i = 0; i < touches.length; i++) {
+		var touch = touches[i];
+        var px = touch.pageX;
+        var py = touch.pageY;
+
+        if (px < 10 && py < 10) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          clear = true;
+        }
+
+        if (!(touch.identifier in prev)) {
+            newPrev[touch.identifier] = touch
+            paintTouch(px, py, touch, color)
+            continue
+        }
+
+        var prevTouch = prev[touch.identifier]
+
+        var ppx = prevTouch.pageX
+        var ppy = prevTouch.pageY
+
+        var dx = px - ppx
+        var dy = py - ppy
+
+        var d = Math.sqrt(dx * dx + dy * dy)
+        dx /= d
+        dy /= d
+
+        var x = ppx
+        var y = ppy
+
+        for (var j = 1; j < d; j += 5) {
+            paintTouch(x, y, touch, color)
+            x += dx * 5
+            y += dy * 5
+		}
+
+		newPrev[touch.identifier] = touch
+	}
+	prev = newPrev
+}
+
+
+function start() {
+    var button = document.getElementById('red')
+    button.focus()
+	canvas = document.getElementById('canvas');
+	ctx = canvas.getContext('2d');
+
+    canvas.addEventListener('touchmove', function(event) {
+      event.preventDefault();
+      processTouch(event.touches);
+    });
+
+    canvas.addEventListener('touchstart', function(event) {
+      clear = false;
+      processTouch(event.touches)
+      event.preventDefault();
+    });
+    canvas.addEventListener('touchend', function(event) {
+      event.preventDefault();
+      prev = {};
+      if (clear) {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      saveImg()
+    });
+
+    var paintArea = document.getElementById('paintArea')
+    function resize() {
+        var data = ctx.getImageData(0, 0, canvas.width - 1, canvas.height - 1);
+        canvas.width = paintArea.offsetWidth;
+        canvas.height = paintArea.offsetHeight;
+        ctx.putImageData(data, 0, 0);
+    }
+
+    window.addEventListener('resize', resize, false);
+    resize();
+};
+
+function saveImg() {
+    var png = document.getElementById("canvas").toDataURL("image/png")
+    document.getElementById("save").href = png.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+
+    var preview = document.getElementById("preview")
+    if (preview == null) {
+        preview = document.createElement("img");
+        preview.setAttribute("id", "preview");
+        preview.setAttribute("height", "80");
+        preview.setAttribute("width", "80");
+        document.getElementById("previewContainer").appendChild(preview);
+    }
+    preview.setAttribute("src", png);
+}
+
+</script>
+<body onload="start()">
+<section id="paintArea">
+    <canvas id="canvas"></canvas>
+</section>
+<section id="controlArea">
+    <button id="red" onclick="color = col(0)"></button>
+    <button id="green" onclick="color = col(1)"></button>
+    <button id="blue" onclick="color = col(2)"></button>
+    <a id="save" href="#" download="image.png">
+        <button id="previewContainer"></button>
+    </a>
+</section>
+</body>
+</onStart>

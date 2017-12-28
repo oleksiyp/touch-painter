@@ -1,0 +1,13 @@
+body { margin: 0px; overflow: hidden; position: absolute; top: 0; right: 0; bottom: 0; left: 0 }
+#paintArea { position: fixed; right: 100px; top: 0;  left: 0; bottom: 0 }
+#controlArea {
+    position: fixed; width: 80px; top:0; bottom: 0; right: 0;
+    padding: 10px
+}
+#controlArea button {
+    height: 80px;
+    width: 80px;
+}
+#red   { background: #febbbb; background: linear-gradient(to bottom, #febbbb 0%,#ff5c5c 100%); }
+#green { background: #cdeb8e; background: linear-gradient(to bottom, #cdeb8e 0%,#a5c956 100%); }
+#blue  { background: #a9e4f7; background: linear-gradient(to bottom, #a9e4f7 0%,#0fb4e7 100%);  }
