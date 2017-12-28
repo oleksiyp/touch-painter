@@ -4,5 +4,6 @@ build
 node_modules
 web
 *.iml
+gradle
 gradlew
 gradlew.bat
