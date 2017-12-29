@@ -8,17 +8,10 @@ import kotlinx.html.js.section
 import org.w3c.dom.HTMLBodyElement
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.asList
 import org.w3c.dom.events.Event
 import kotlin.browser.document
-import kotlin.browser.window
-import kotlin.collections.first
 import kotlin.collections.set
 
-
-enum class Color {
-    RED, GREEN, BLUE
-}
 
 class TouchPainter {
     lateinit var canvas: TouchCanvas
@@ -27,7 +20,7 @@ class TouchPainter {
         canvas.color = color
     }
 
-    fun onStart(body: HTMLBodyElement) {
+    fun init(body: HTMLBodyElement) {
         body.append {
             section {
                 id = "paintArea"
@@ -40,6 +33,9 @@ class TouchPainter {
                 button { id = "red"; onClickFunction = { onColorButton(Color.RED) } }
                 button { id = "green"; onClickFunction = { onColorButton(Color.GREEN) } }
                 button { id = "blue"; onClickFunction = { onColorButton(Color.BLUE) } }
+                button { id = "yellow"; onClickFunction = { onColorButton(Color.YELLOW) } }
+                button { id = "magenta"; onClickFunction = { onColorButton(Color.MAGENTA) } }
+                button { id = "cyan"; onClickFunction = { onColorButton(Color.CYAN) } }
                 a {
                     id = "save"
                     href = "#"
@@ -64,16 +60,4 @@ class TouchPainter {
         controlArea.addEventListener("touchmove", Event::preventDefault)
     }
 
-
-}
-
-fun main(args: Array<String>) {
-    val painter = TouchPainter()
-    window.onload = {
-        val body = document.getElementsByTagName("body")
-                .asList()
-                .first() as HTMLBodyElement
-
-        painter.onStart(body)
-    }
 }

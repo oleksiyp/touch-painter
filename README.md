@@ -1,6 +1,8 @@
 # touch-painter
 Kotlin JS touch-screen painting app
 
+!(house.png)[house]
+
 ## Building
 ```bash
 $ gradle webpack-bundle
@@ -10,3 +12,4 @@ $ gradle webpack-bundle
 ```bash
 $ gradle webpack-run
 ```
+

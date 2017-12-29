@@ -2,7 +2,6 @@ import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.HTMLElement
 import kotlin.browser.window
-import kotlin.collections.mutableMapOf
 import kotlin.collections.set
 import kotlin.math.PI
 import kotlin.math.sqrt
@@ -20,6 +19,9 @@ class TouchCanvas(val canvas: HTMLCanvasElement,
             Color.RED -> "200, 0, 0"
             Color.GREEN -> "0, 200, 0"
             Color.BLUE -> "0, 0, 200"
+            Color.CYAN -> "0, 200, 200"
+            Color.MAGENTA -> "200, 0, 200"
+            Color.YELLOW -> "200, 200, 0"
         }
 
     var clear = false
