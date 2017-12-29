@@ -4,5 +4,6 @@ enum class Color {
     BLUE,
     CYAN,
     MAGENTA,
-    YELLOW
+    YELLOW,
+    ERASE
 }

@@ -11,8 +11,8 @@ class ImageSaver {
         if (preview == null) {
             preview = document.createElement("img");
             preview.setAttribute("id", "preview");
-            preview.setAttribute("height", "60");
-            preview.setAttribute("width", "60");
+            preview.setAttribute("height", "40");
+            preview.setAttribute("width", "40");
             val container = document.getElementById("previewContainer") as HTMLButtonElement
             container.appendChild(preview);
         }

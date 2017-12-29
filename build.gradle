@@ -16,6 +16,7 @@ group 'touch-painter'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin2js'
+apply plugin: 'kotlin-dce-js'
 apply plugin: 'org.jetbrains.kotlin.frontend'
 
 repositories {

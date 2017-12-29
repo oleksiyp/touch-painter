@@ -22,6 +22,7 @@ class TouchCanvas(val canvas: HTMLCanvasElement,
             Color.CYAN -> "0, 200, 200"
             Color.MAGENTA -> "200, 0, 200"
             Color.YELLOW -> "200, 200, 0"
+            Color.ERASE -> "255, 255, 255"
         }
 
     var clear = false
@@ -78,10 +79,19 @@ class TouchCanvas(val canvas: HTMLCanvasElement,
             ctx.fill()
             ctx.closePath()
         }
-
-        ellipse(x, y, touch, 0.5, 0.1)
-        ellipse(x, y, touch, 1.0 / 3, 0.1)
-        ellipse(x, y, touch, 1.0 / 4, 0.4)
+        fun triEllipse() {
+            ellipse(x, y, touch, 0.5, 0.1)
+            ellipse(x, y, touch, 1.0 / 3, 0.1)
+            ellipse(x, y, touch, 1.0 / 4, 0.4)
+        }
+        if (color == Color.ERASE) {
+            val op = ctx.globalCompositeOperation
+            ctx.globalCompositeOperation = "destination-out"
+            triEllipse()
+            ctx.globalCompositeOperation = op
+        } else {
+            triEllipse()
+        }
     }
 
 

@@ -1,0 +1,17 @@
+body { margin: 0px; overflow: hidden; position: absolute; top: 0; right: 0; bottom: 0; left: 0 }
+#paintArea { position: fixed; right: 80px; top: 0;  left: 0; bottom: 0 }
+#controlArea {
+    position: fixed; width: 60px; top:0; bottom: 0; right: 0;
+    padding: 10px
+}
+#controlArea button {
+    height: 60px;
+    width: 60px;
+}
+#white   { background: white; }
+#red     { background: #febbbb; background: linear-gradient(to bottom, #febbbb 0%,#ff5c5c 100%); }
+#green   { background: #cdeb8e; background: linear-gradient(to bottom, #cdeb8e 0%,#a5c956 100%); }
+#blue    { background: #499bea; background: linear-gradient(to bottom, #499bea 0%,#207ce5 100%); }
+#yellow  { background: #fefcea; background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); }
+#magenta { background: #fb83fa; background: linear-gradient(to bottom, #fb83fa 0%,#e93cec 100%); }
+#cyan    { background: #93cede; background: linear-gradient(to bottom, #93cede 0%,#49a5bf 100%); }

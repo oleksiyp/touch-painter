@@ -1,8 +1,5 @@
-import kotlinx.html.a
-import kotlinx.html.button
-import kotlinx.html.canvas
+import kotlinx.html.*
 import kotlinx.html.dom.append
-import kotlinx.html.id
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.section
 import org.w3c.dom.HTMLBodyElement
@@ -36,6 +33,15 @@ class TouchPainter {
                 button { id = "yellow"; onClickFunction = { onColorButton(Color.YELLOW) } }
                 button { id = "magenta"; onClickFunction = { onColorButton(Color.MAGENTA) } }
                 button { id = "cyan"; onClickFunction = { onColorButton(Color.CYAN) } }
+                button {
+                    id = "white";
+                    onClickFunction = { onColorButton(Color.ERASE) }
+                    img {
+                        src = "eraser.png"
+                        width = "50px"
+                        height = "50px"
+                    }
+                }
                 a {
                     id = "save"
                     href = "#"
