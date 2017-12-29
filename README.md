@@ -1,7 +1,7 @@
 # touch-painter
 Kotlin JS touch-screen painting app
 
-!(house.png)[house]
+!(house)[house.png]
 
 ## Building
 ```bash
