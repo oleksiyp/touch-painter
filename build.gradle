@@ -33,6 +33,7 @@ compileKotlin2Js {
     kotlinOptions.metaInfo = true
     kotlinOptions.outputFile = "$project.buildDir.path/js/${project.name}.js"
     kotlinOptions.sourceMap = true
+    kotlinOptions.sourceMapEmbedSources = "always"
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
 }
@@ -41,11 +42,14 @@ compileTestKotlin2Js {
     kotlinOptions.metaInfo = true
     kotlinOptions.outputFile = "$project.buildDir.path/js-tests/${project.name}-tests.js"
     kotlinOptions.sourceMap = true
+    kotlinOptions.sourceMapEmbedSources = "always"
     kotlinOptions.moduleKind = 'commonjs'
     kotlinOptions.main = "call"
 }
+
 kotlinFrontend {
     downloadNodeJsVersion = "latest"
+    sourceMaps = true
 
     npm {
         dependency("vue", "2.3.4")
